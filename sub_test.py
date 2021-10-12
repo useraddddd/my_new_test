@@ -15,6 +15,17 @@ for nd in range(0,len(group)):
     for k,v in dic1.items():
         dict_rap[k]=v
 print(dict_rap)
+dict_new ={}
+for k,v in dict_rap.items():
+    temp_list = v.split()
+    l= dict(i.split("=")for i in temp_list)
+    for k,v in l.items() :
+        dict_new[k]=v
+    dict_rap[k]=dict_new
+
+
+print(dict_new)
+print(dict_rap)
     #dic2 = {group[1][0]:group[1][1] for i in group[1]}
 
 # list = []
