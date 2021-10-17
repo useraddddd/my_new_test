@@ -4,20 +4,13 @@ import sys
 import traceback
 
 import paramiko
-import websocket
 from paramiko_expect import SSHClientInteraction
 
-from CG_lient import CG_Client
-
-
-
-ws_server = "ws://0.0.0.0:8000/websocket/"
-# ws_client = websocket.create_connection(ws_server)
 def main():
     # Set login credentials and the server prompt
-    hostname = '42.192.152.237'
+    hostname = ''
     username = 'root'
-    password = 'Yao987yao~'
+    password = ''
     # prompt = r'vagrant@paramiko-expect-dev:~\$\s+'
     # Use SSH client to login
     try:
@@ -36,7 +29,7 @@ def main():
         # interact.expect(prompt)
 
         # Send the tail command
-        interact.send('tail -f /home/lighthouse/1.log')
+        interact.send('tail -f -n 50 /home/lighthouse/1.log')
 
         # Now let the class tail the file for us
         interact.tail(line_prefix=hostname+': ',output_callback=output_func)
@@ -53,16 +46,17 @@ def main():
 
 
 def output_func(msg):
-    if msg:
-        try:
-            ws = CG_Client(ws_server)
-            ws.connect()
-            ws.send(msg)
-            ws.run_forever()
-        except KeyboardInterrupt:
-            ws.close()
+    # if msg:
+    #     try:
+    #         ws = CG_Client(ws_server)
+    #         ws.connect()
+    #         ws.send(msg)
+    #         ws.run_forever()
+    #     except KeyboardInterrupt:
+    #         ws.close()
 
-    # sys.stdout.write(msg)
+    sys.stdout.write(msg)
+    sys.stdout.flush()
 
 
 
